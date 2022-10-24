@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs"); // to create salt and pepper and also hashin
 const jwt = require("jsonwebtoken"); // to create a jwt token
 const fetchUser = require("../middleware/fetchUser");
 
-const JWT_SECRET = "MayankistheOverlord$$";
+const JWT_SECRET = "JWT_SECRET";
 
 //Route 1 :create a User using: Post "/api/auth/createuser"  Doesn't require auth
 router.post(

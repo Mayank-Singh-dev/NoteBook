@@ -1,8 +1,17 @@
-import React from "react";
-import {Link} from "react-router-dom";
-function NavBar() {
+import { React } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+const NavBar = () => {
+  let location = useLocation();
+  let navigate = useNavigate();
+
+  const handlelogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg bg-light">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           iNoteBook
@@ -21,27 +30,24 @@ function NavBar() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/">
+              <Link className={`nav-link ${location.pathname === "/" ? "active" : ""}`} aria-current="page" to="/">
                 Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">
+              <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/about">
                 About-us
               </Link>
             </li>
           </ul>
-          <form className="d-flex" role="search">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+          {localStorage.getItem('token') ?
+  <button onClick={handlelogout} className="btn btn-primary">Logout</button>
+  :
+  <form className="d-flex">
+    <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
+    <Link className="btn btn-primary mx-1" to="/signup" role="button">Signup</Link>
+  </form>
+}
         </div>
       </div>
     </nav>
